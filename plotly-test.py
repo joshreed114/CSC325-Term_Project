@@ -9,14 +9,6 @@ import os
 # getting warning about connection using local DB
 warnings.simplefilter("ignore")
 
-# initialize connector object
-connection = pymysql.connect(host='localhost',
-                             user='root',
-                             password='',
-                             database=None,
-                             cursorclass=pymysql.cursors.DictCursor)
-cursor = connection.cursor()
-
 # Color theme used by the visualizations
 color = px.colors.sequential.Agsunset
 
@@ -140,13 +132,8 @@ def ratings_by_year(connection, cursor):
                 title = 'Game Scores Per Year', color_discrete_sequence = color)
     fig.show()
 
-with connection:
-    with connection.cursor() as cursor:
-        genre_distribution(connection, cursor)
-        platform_distribution(connection, cursor)
-        sales_by_platform(connection, cursor)
-        sales_by_year(connection, cursor)
-        ratings_by_year(connection, cursor)
-
-    # connection is not autocommit by default
-    connection.commit()
+genre_distribution(connection, cursor)
+platform_distribution(connection, cursor)
+sales_by_platform(connection, cursor)
+sales_by_year(connection, cursor)
+ratings_by_year(connection, cursor)
